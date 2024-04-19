@@ -15,6 +15,4 @@ export type TViewSubs<Render extends object = object> = {
 	renderArgs?: Render;
 };
 
-export abstract class View<> {
-
-}
+export abstract class View<element extends HTMLElement, Events extends object, Render extends object> {}
