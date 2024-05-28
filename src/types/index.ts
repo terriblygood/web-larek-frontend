@@ -6,7 +6,7 @@ interface IItem {
     image: string;
     title: string;
     category: string;
-    price: number;
+    price: number | null;
 }
 
 type TPaymentType = 'card' | 'cash';
@@ -19,13 +19,18 @@ interface IOrderItem {
     phone: string;
     address: string;
 }
+
+interface IOrderResult {
+	id: string;
+	total: number;
+}
 //for work with api
 type TOrderAPI = Omit<IOrderItem, 'items'> & {
     items: string[];
 	total: number;
 } 
 
-type TOrderStep = 'dispatch' | 'contacts';
+type TOrderStep = 'shipment' | 'contacts';
 
 
-export {IItem, IOrderItem}
+export {IItem, IOrderItem, TOrderAPI, IOrderResult, TOrderStep, TPaymentType}

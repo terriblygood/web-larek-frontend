@@ -133,3 +133,57 @@ export function createElement<
     }
     return element;
 }
+
+export function getKeyByValue(translation: string, object: Record<string, string>): string | null {
+    // Перебираем все пары ключ-значение в объекте
+    const result = Object.entries(object).find(
+		([, value]) => value == translation
+	);
+
+	if (result === undefined) {
+		return null;
+	}
+
+	return result[0];
+  }
+  
+
+export function formatNumber(x: number, sep = ' ') {
+	return Number(x).toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+}
+
+export function funcPrice(x: number, titles?: [string, string, string]) {
+	if (x === null) {
+		return 'Бесценно';
+	}
+
+	if (!Array.isArray(titles)) {
+		return formatNumber(x);
+	}
+
+	return `${formatNumber(x)} ${titles[2]}`;
+}
+
+// export function funcPrice(
+// 	x: number,
+// 	currencyTitles?: [string, string, string]
+// ) {
+// 	if (x === null) {
+// 		return 'Бесценно';
+// 	}
+
+// 	if (!Array.isArray(currencyTitles)) {
+// 		return formatNumber(x);
+// 	}
+
+// 	return `${formatNumber(x)} ${declOfNum(x, currencyTitles)}`;
+// }
+
+// export function declOfNum(x: number, titles: [string, string, string]) {
+// 	const cases = [2, 0, 1, 1, 1, 2];
+
+// 	const result =
+// 		titles[x % 100 > 4 && x % 100 < 20 ? 2 : cases[x % 10 < 5 ? x % 10 : 5]];
+
+// 	return result;
+// }

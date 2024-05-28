@@ -1,6 +1,6 @@
-export type ApiListResponse<Type> = {
+export type ApiListResponse<T> = {
     total: number,
-    items: Type[]
+    items: T[]
 };
 
 export type ApiPostMethods = 'POST' | 'PUT' | 'DELETE';
@@ -14,7 +14,7 @@ export class Api {
         this.options = {
             headers: {
                 'Content-Type': 'application/json',
-                ...(options.headers as object ?? {})
+                ...((options.headers as object) ?? {})
             }
         };
     }

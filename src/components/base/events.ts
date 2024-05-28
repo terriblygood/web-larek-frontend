@@ -7,7 +7,7 @@ type EmitterEvent = {
     data: unknown
 };
 
-export interface IEvents {
+interface IEvents {
     on<T extends object>(event: EventName, callback: (data: T) => void): void;
     emit<T extends object>(event: string, data?: T): void;
     trigger<T extends object>(event: string, context?: Partial<T>): (data: T) => void;
@@ -18,7 +18,7 @@ export interface IEvents {
  * В расширенных вариантах есть возможность подписаться на все события
  * или слушать события по шаблону например
  */
-export class EventEmitter implements IEvents {
+class EventEmitter implements IEvents {
     _events: Map<EventName, Set<Subscriber>>;
 
     constructor() {
@@ -34,7 +34,6 @@ export class EventEmitter implements IEvents {
         }
         this._events.get(eventName)?.add(callback);
     }
-
     /**
      * Снять обработчик с события
      */
@@ -46,7 +45,6 @@ export class EventEmitter implements IEvents {
             }
         }
     }
-
     /**
      * Инициировать событие с данными
      */
@@ -62,7 +60,7 @@ export class EventEmitter implements IEvents {
      * Слушать все события
      */
     onAll(callback: (event: EmitterEvent) => void) {
-        this.on("*", callback);
+        this.on(new RegExp(/(.*?)/), callback);
     }
 
     /**
@@ -85,3 +83,4 @@ export class EventEmitter implements IEvents {
     }
 }
 
+export {EventName, Subscriber, EmitterEvent, IEvents, EventEmitter}
