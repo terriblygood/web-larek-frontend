@@ -82,7 +82,7 @@ eventEmitter.on<{ data: { items: IItem[] } }>(
 	StateEvents.PRODUCTS_UPDATE,
 	({ data }) => {
 	const { items } = data;
-	//   console.log(data, 'CARDS DATA BEFORE MAP')
+
 	  const itemsView = items.map((item) => {
 		const itemView = new Item({
 		  element: cloneTemplate('#card-catalog'),
@@ -93,7 +93,7 @@ eventEmitter.on<{ data: { items: IItem[] } }>(
 			},
 		  },
 		});
-		// console.log(itemView,'obJECT')
+
 		const productsViewRenderArgs: TItemRenderArgs = {
 		 ...item,
 		  color: getKeyByValue(
@@ -102,11 +102,8 @@ eventEmitter.on<{ data: { items: IItem[] } }>(
 		  ),
 		  price: funcPrice(item.price, settings.CURRENCY_TITLES),
 		};
-		console.log(productsViewRenderArgs,'productsViewRenderArgs');
-		// console.log(itemView.render(productsViewRenderArgs),'itemView.render');
 		return itemView.render(productsViewRenderArgs);
 	  });
-	//   console.log(itemsView, 'ITEMSVIEW CONSOLE')
 	  products.items = itemsView;
 	}
   );
@@ -241,7 +238,6 @@ eventEmitter.on<{ data: { step: TOrderStep } }>(
 				eventEmitter,
 				eventHandlers: {
 					onSubmit: () => {
-						// При сабмите формы отправляем заказ на сервер
 						api
 							.createOrder(appState.getOrderAPI())
 							.then((data) => {
@@ -261,10 +257,7 @@ eventEmitter.on<{ data: { step: TOrderStep } }>(
 									content: {
 										view: orderSuccessView,
 										renderArgs: {
-											description: `Списано ${funcPrice(
-												data.total,
-												settings.CURRENCY_TITLES
-											)}`,
+											description: `Списано ${funcPrice(data.total, settings.CURRENCY_TITLES)}`,
 										},
 									},
 								});
@@ -275,7 +268,6 @@ eventEmitter.on<{ data: { step: TOrderStep } }>(
 					},
 					onInput: ({ field, value }) => {
 						appState.setOrder(field as keyof IOrderItem, value);
-
 						orderContactsView.render({
 							...appState.getOrderAPI(),
 							errors: appState.getOrderErrors(),
